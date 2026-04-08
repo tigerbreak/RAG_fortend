@@ -11,7 +11,8 @@ import {
   PieChart,
   Pie,
   Cell,
-  Gauge
+  RadialBarChart,
+  RadialBar
 } from 'recharts'
 import { ChevronUp, ChevronDown, FileText, GripVertical } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -183,17 +184,24 @@ export function InsightDock() {
               <h4 className="text-xs font-medium mb-3">检索质量</h4>
               <div className="relative">
                 <ResponsiveContainer width={100} height={100}>
-                  <Gauge
-                    value={mockInsightData.qualityScore}
-                    min={0}
-                    max={100}
-                    endAngle={180}
-                    startAngle={0}
+                  <RadialBarChart 
+                    cx="50%" 
+                    cy="50%" 
+                    innerRadius="60%" 
+                    outerRadius="100%" 
+                    data={[{ name: 'score', value: mockInsightData.qualityScore }]}
+                    startAngle={180}
+                    endAngle={0}
                   >
-                    <mesh /> 
-                  </Gauge>
+                    <RadialBar 
+                      background 
+                      dataKey="value" 
+                      cornerRadius={10}
+                      fill="#3b82f6"
+                    />
+                  </RadialBarChart>
                 </ResponsiveContainer>
-                <div className="absolute inset-0 flex items-center justify-center">
+                <div className="absolute inset-0 flex items-end justify-center pb-3">
                   <span className="text-lg font-semibold">
                     {mockInsightData.qualityScore}
                   </span>
