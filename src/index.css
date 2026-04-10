@@ -57,3 +57,45 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Resizable Panel Styles - react-resizable-panels v4 */
+[data-separator] {
+  @apply relative flex justify-center items-center bg-transparent transition-colors;
+}
+
+[data-separator]:hover {
+  @apply bg-primary/30;
+}
+
+[data-separator][data-resize-handle-state="drag"] {
+  @apply bg-primary/50;
+}
+
+[data-separator][data-resize-handle-state="resize"] {
+  @apply bg-primary/50;
+}
+
+/* Horizontal separator (vertical resize handle) */
+[data-group-orientation="horizontal"] [data-separator] {
+  @apply w-1 cursor-col-resize;
+}
+
+/* Vertical separator (horizontal resize handle) */
+[data-group-orientation="vertical"] [data-separator] {
+  @apply h-1 cursor-row-resize;
+}
+
+/* Smooth transitions for panel resize */
+[data-panel] {
+  @apply transition-none;
+}
+
+/* Hide scrollbar but keep functionality */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

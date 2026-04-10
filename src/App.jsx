@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Group, Panel, Separator } from 'react-resizable-panels'
 import { HistorySidebar } from './components/HistorySidebar'
 import { NavSidebar } from './components/NavSidebar'
 import { ChatArea } from './components/ChatArea'
@@ -28,27 +29,41 @@ function App() {
       {/* Navigation Sidebar */}
       <NavSidebar activeNav={activeNav} onNavChange={setActiveNav} />
 
-      {/* Main Content Area */}
+      {/* Main Content Area with Resizable Panels */}
       <div className="flex-1 flex flex-col min-w-0">
-        {/* Top Section: Chat + Document */}
-        <div className="flex-1 flex min-h-0">
-          {/* Chat Area */}
-          <div className="w-[480px] border-r border-border flex-shrink-0">
-            <ChatArea onCitationClick={handleCitationClick} />
-          </div>
+        <Group direction="horizontal" className="flex-1">
+          {/* Chat Area - Left Panel */}
+          <Panel defaultSize={35} minSize={20} maxSize={60} className="flex">
+            <div className="w-full border-r border-border">
+              <ChatArea onCitationClick={handleCitationClick} />
+            </div>
+          </Panel>
 
-          {/* Document Viewer */}
-          <div className="flex-1 min-w-0">
-            <DocumentViewer 
-              activeCitation={activeCitation} 
-              onOcrToggle={handleOcrToggle}
-              ocrMode={ocrMode}
-            />
-          </div>
-        </div>
+          <Separator className="w-1 bg-border hover:bg-primary/50 transition-colors cursor-col-resize" />
 
-        {/* Bottom: Insight Dock */}
-        <InsightDock />
+          {/* Right Panel - Document + Insight */}
+          <Panel defaultSize={65} minSize={40} className="flex flex-col">
+            <Group direction="vertical" className="flex-1">
+              {/* Document Viewer - Top */}
+              <Panel defaultSize={60} minSize={20}>
+                <DocumentViewer 
+                  activeCitation={activeCitation} 
+                  onOcrToggle={handleOcrToggle}
+                  ocrMode={ocrMode}
+                />
+              </Panel>
+
+              <Separator className="h-1 bg-border hover:bg-primary/50 transition-colors cursor-row-resize" />
+
+              {/* Insight Dock - Bottom */}
+              <Panel defaultSize={40} minSize={15} className="flex">
+                <div className="flex-1">
+                  <InsightDock />
+                </div>
+              </Panel>
+            </Group>
+          </Panel>
+        </Group>
       </div>
     </div>
   )
